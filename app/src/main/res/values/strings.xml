@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Chat</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="csc480_capstone">CSC480 Capstone</string>
+    <string name="firebase_chat">Firebase Chat</string>
+    <string name="kyle_king">Kyle King</string>
+    <string name="register">Register</string>
+    <string name="switch_to_login">Switch to Login</string>
+    <string name="register_a_new_account">Register a New Account</string>
+    <string name="logout">Logout</string>
+</resources>
