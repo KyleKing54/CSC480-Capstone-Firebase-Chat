@@ -1,4 +1,4 @@
-package com.kingk.chat
+package com.kingk.chat.screens
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,8 +10,9 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.kingk.chat.R
 
-class Register : AppCompatActivity() {
+class Login : AppCompatActivity() {
 
     private lateinit var auth : FirebaseAuth
 
@@ -27,25 +28,21 @@ class Register : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        setContentView(R.layout.activity_login)
 
         auth = Firebase.auth
-        val firebaseUtil = FirebaseUtil()
 
         // initialize UI objects
         val editTextEmail = findViewById<TextInputEditText>(R.id.email)
-        val editUsername = findViewById<TextInputEditText>(R.id.username)
         val editTextPassword = findViewById<TextInputEditText>(R.id.password)
-        val registerButton = findViewById<Button>(R.id.register_button)
-        val switchLogin = findViewById<TextView>(R.id.switch_to_login)
+        val loginButton = findViewById<Button>(R.id.login_button)
+        val switchRegister = findViewById<TextView>(R.id.switch_to_register)
 
-        registerButton.setOnClickListener {
+        loginButton.setOnClickListener {
 
             // get input text after button is pushed
             val email = editTextEmail.text.toString()
-            val username = editUsername.text.toString()
             val password = editTextPassword.text.toString()
-
 
             // validate email input
             if (email == "") {
@@ -67,35 +64,14 @@ class Register : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            auth.createUserWithEmailAndPassword(email, password)
+            auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Sign in success, display a message to the user.
-                        Toast.makeText(
-                            baseContext,
-                            "Account created.",
-                            Toast.LENGTH_SHORT,
-                        ).show()
-
-                        // create user class
-                        val user = User(
-                            firebaseUtil.currentUserId(),
-                            username,
-                            email
-                        )
-
-                        // add user to database
-                        firebaseUtil.currentUserData().set(user).addOnCompleteListener() {
-                            if (task.isSuccessful) {
-                                // Log the user in
-                                startActivity(Intent(this, Login::class.java))
-                                finish()
-                            }
-                        }
-
-
+                        // sign in success
+                        startActivity(Intent(this, MainActivity::class.java))
+                        finish()
                     } else {
-                        // If sign in fails, display a message to the user.
+                        // sign in failed, alert the user
                         Toast.makeText(
                             baseContext,
                             "Authentication failed.",
@@ -103,11 +79,10 @@ class Register : AppCompatActivity() {
                         ).show()
                     }
                 }
-
         }
 
-        switchLogin.setOnClickListener {
-            startActivity(Intent(this, Login::class.java))
+        switchRegister.setOnClickListener {
+            startActivity(Intent(this, Register::class.java))
             finish()
         }
     }

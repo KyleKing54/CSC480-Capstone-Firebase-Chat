@@ -1,17 +1,24 @@
 package com.kingk.chat.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.kingk.chat.FirebaseUtil
 import com.kingk.chat.R
-import com.kingk.chat.User
+import com.kingk.chat.objects.User
+import com.kingk.chat.screens.Conversation
+import com.kingk.chat.utils.AndroidUtil
+import com.kingk.chat.utils.FirebaseUtil
 
-class UserRecyclerAdapter(private val userList : ArrayList<User>) : RecyclerView.Adapter<UserRecyclerAdapter.UserModelViewHolder>() {
+
+class UserRecyclerAdapter(private val userList : ArrayList<User>, private val context: Context) : RecyclerView.Adapter<UserRecyclerAdapter.UserModelViewHolder>() {
 
     val firebaseUtil = FirebaseUtil()
+    val androidUtil = AndroidUtil()
+
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -25,6 +32,13 @@ class UserRecyclerAdapter(private val userList : ArrayList<User>) : RecyclerView
     override fun onBindViewHolder(holder: UserModelViewHolder, position: Int) {
         val user : User = userList[position]
         holder.username.text = user.username
+
+        holder.itemView.setOnClickListener() {
+            val intent = Intent(context, Conversation::class.java)
+            intent.putExtra("username",user.username)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

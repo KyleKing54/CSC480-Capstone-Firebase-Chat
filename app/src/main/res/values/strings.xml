@@ -15,4 +15,5 @@
     <string name="back_button">Back Button</string>
     <string name="username">Username</string>
     <string name="profile_picture">Profile Picture</string>
+    <string name="message_hint">Message...</string>
 </resources>

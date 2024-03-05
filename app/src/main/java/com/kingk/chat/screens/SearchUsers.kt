@@ -1,4 +1,4 @@
-package com.kingk.chat
+package com.kingk.chat.screens
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
+import com.kingk.chat.R
 import com.kingk.chat.adapter.UserRecyclerAdapter
+import com.kingk.chat.objects.User
 
 class SearchUsers : AppCompatActivity() {
 
@@ -33,7 +35,7 @@ class SearchUsers : AppCompatActivity() {
         //searchInputText.requestFocus()
 
         userArrayList = arrayListOf()
-        adapter = UserRecyclerAdapter(userArrayList)
+        adapter = UserRecyclerAdapter(userArrayList, this)
 
         userRecyclerView.adapter = adapter
         userRecyclerView.layoutManager = LinearLayoutManager(this)

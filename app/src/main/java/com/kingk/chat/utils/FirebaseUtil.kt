@@ -1,4 +1,4 @@
-package com.kingk.chat
+package com.kingk.chat.utils
 
 import com.google.firebase.Firebase
 import com.google.firebase.auth.auth

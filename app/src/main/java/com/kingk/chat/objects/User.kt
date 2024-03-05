@@ -1,4 +1,4 @@
-package com.kingk.chat
+package com.kingk.chat.objects
 
 data class User (
     var userID: String ?= null,

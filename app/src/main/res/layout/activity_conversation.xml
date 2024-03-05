@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.Conversation">
+
+    <RelativeLayout
+        android:id="@+id/conversation_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary"
+        android:padding="10dp" >
+
+        <TextView
+            android:id="@+id/received_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/username"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/user_picture"/>
+
+        <ImageButton
+            android:id="@+id/back_button"
+            android:contentDescription="@string/back_button"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/back_24"
+            app:tint="@color/white"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_centerVertical="true" />
+
+        <include layout="@layout/user_picture"
+            android:id="@+id/user_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@id/back_button"/>
+
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/message_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/conversation_toolbar"
+        android:layout_above="@id/message_layout"/>
+
+    <RelativeLayout
+        android:id="@+id/message_layout"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:padding="8dp">
+
+        <EditText
+            android:id="@+id/message_box"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toLeftOf="@+id/send_button"
+            android:hint="@string/message_hint"
+            android:padding="10dp" />
+
+        <ImageButton
+            android:id="@+id/send_button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/send_24"
+            app:tint="@color/white"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:padding="8dp"
+            android:layout_marginStart="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
