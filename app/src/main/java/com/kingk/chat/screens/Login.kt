@@ -4,33 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.kingk.chat.R
+import com.kingk.chat.utils.AndroidUtil
+import com.kingk.chat.utils.FirebaseUtil
 
 class Login : AppCompatActivity() {
 
-    private lateinit var auth : FirebaseAuth
+    private var auth : FirebaseAuth = Firebase.auth
+    private var androidUtil: AndroidUtil = AndroidUtil()
+    private var firebaseUtil : FirebaseUtil = FirebaseUtil()
 
-    public override fun onStart() {
-        super.onStart()
-        // Check if user is signed in (non-null) and update UI accordingly.
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        auth = Firebase.auth
+        // if user is already logged in, skip login
+        firebaseUtil.skipLogin(this, auth)
 
         // initialize UI objects
         val editTextEmail = findViewById<TextInputEditText>(R.id.email)
@@ -46,21 +41,13 @@ class Login : AppCompatActivity() {
 
             // validate email input
             if (email == "") {
-                Toast.makeText(
-                    baseContext,
-                    "Please enter an email",
-                    Toast.LENGTH_SHORT)
-                    .show()
+                androidUtil.showToast(this, "Please enter an email")
                 return@setOnClickListener
             }
 
             // validate password input
             if (password == "") {
-                Toast.makeText(
-                    baseContext,
-                    "Please enter an email",
-                    Toast.LENGTH_SHORT)
-                    .show()
+                androidUtil.showToast(this, "Please enter a password")
                 return@setOnClickListener
             }
 
@@ -69,21 +56,15 @@ class Login : AppCompatActivity() {
                     if (task.isSuccessful) {
                         // sign in success
                         startActivity(Intent(this, MainActivity::class.java))
-                        finish()
                     } else {
                         // sign in failed, alert the user
-                        Toast.makeText(
-                            baseContext,
-                            "Authentication failed.",
-                            Toast.LENGTH_SHORT,
-                        ).show()
+                        androidUtil.showToast(this, "Authentication failed")
                     }
                 }
         }
 
         switchRegister.setOnClickListener {
             startActivity(Intent(this, Register::class.java))
-            finish()
         }
     }
 }
