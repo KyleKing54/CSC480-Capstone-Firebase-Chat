@@ -23,12 +23,11 @@ class SelectedConversation : AppCompatActivity() {
     private var androidUtil: AndroidUtil = AndroidUtil()
     private var firebaseUtil : FirebaseUtil = FirebaseUtil()
 
-    lateinit var conversation : Conversation
+    private lateinit var conversation : Conversation
     lateinit var receivedUser : User
-    //var receviedUserID = intent.getStringExtra("userID")
-    //var receivedUserName = intent.getStringExtra("username")
     lateinit var conversationID : String
-    //var conversationID = firebaseUtil.generateConversationID(firebaseUtil.currentUserId(), receviedUserID.toString())
+    //private var receivedUser : User = androidUtil.receiveUserIntent(intent)
+    //private var conversationID = firebaseUtil.generateConversationID(firebaseUtil.currentUserId(), receivedUser.userID.toString())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
