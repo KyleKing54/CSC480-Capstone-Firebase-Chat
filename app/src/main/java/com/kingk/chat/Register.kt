@@ -1,12 +1,11 @@
 package com.kingk.chat
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -21,8 +20,7 @@ class Register : AppCompatActivity() {
         // Check if user is signed in (non-null) and update UI accordingly.
         val currentUser = auth.currentUser
         if (currentUser != null) {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
     }
@@ -32,9 +30,11 @@ class Register : AppCompatActivity() {
         setContentView(R.layout.activity_register)
 
         auth = Firebase.auth
+        val firebaseUtil = FirebaseUtil()
 
         // initialize UI objects
         val editTextEmail = findViewById<TextInputEditText>(R.id.email)
+        val editUsername = findViewById<TextInputEditText>(R.id.username)
         val editTextPassword = findViewById<TextInputEditText>(R.id.password)
         val registerButton = findViewById<Button>(R.id.register_button)
         val switchLogin = findViewById<TextView>(R.id.switch_to_login)
@@ -43,7 +43,9 @@ class Register : AppCompatActivity() {
 
             // get input text after button is pushed
             val email = editTextEmail.text.toString()
+            val username = editUsername.text.toString()
             val password = editTextPassword.text.toString()
+
 
             // validate email input
             if (email == "") {
@@ -75,10 +77,23 @@ class Register : AppCompatActivity() {
                             Toast.LENGTH_SHORT,
                         ).show()
 
-                        // Log the user in
-                        val intent = Intent(this, Login::class.java)
-                        startActivity(intent)
-                        finish()
+                        // create user class
+                        val user = User(
+                            firebaseUtil.currentUserId(),
+                            username,
+                            email
+                        )
+
+                        // add user to database
+                        firebaseUtil.currentUserData().set(user).addOnCompleteListener() {
+                            if (task.isSuccessful) {
+                                // Log the user in
+                                startActivity(Intent(this, Login::class.java))
+                                finish()
+                            }
+                        }
+
+
                     } else {
                         // If sign in fails, display a message to the user.
                         Toast.makeText(
@@ -92,8 +107,7 @@ class Register : AppCompatActivity() {
         }
 
         switchLogin.setOnClickListener {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, Login::class.java))
             finish()
         }
     }

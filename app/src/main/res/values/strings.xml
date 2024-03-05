@@ -10,4 +10,9 @@
     <string name="switch_to_login">Switch to Login</string>
     <string name="register_a_new_account">Register a New Account</string>
     <string name="logout">Logout</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="search_users">Search Users</string>
+    <string name="back_button">Back Button</string>
+    <string name="username">Username</string>
+    <string name="profile_picture">Profile Picture</string>
 </resources>

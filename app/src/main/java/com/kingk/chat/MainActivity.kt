@@ -1,14 +1,17 @@
 package com.kingk.chat
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.auth
+import org.w3c.dom.Text
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,24 +24,24 @@ class MainActivity : AppCompatActivity() {
         auth = Firebase.auth
         val user : FirebaseUser? = auth.currentUser
 
-        // initialize UI objects
-        val textView = findViewById<TextView>(R.id.user_email)
-        val logoutButton = findViewById<Button>(R.id.logout_button)
-
         // if user is null, open login activity
         if (user == null) {
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, Login::class.java))
             finish()
         }
-        else {
-            textView.text = user.email
+
+        // initialize UI objects
+        val searchButton = findViewById<ImageButton>(R.id.search_button)
+        val logoutButton = findViewById<ImageButton>(R.id.logout_button)
+
+        searchButton.setOnClickListener() {
+           startActivity(Intent(this, SearchUsers::class.java))
+           finish()
         }
 
-        logoutButton.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()
-            val intent = Intent(this, Login::class.java)
-            startActivity(intent)
+        logoutButton.setOnClickListener() {
+            Firebase.auth.signOut()
+            startActivity(Intent(this, Login::class.java))
             finish()
         }
     }
