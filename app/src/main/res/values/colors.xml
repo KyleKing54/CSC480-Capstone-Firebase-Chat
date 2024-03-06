@@ -4,7 +4,10 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="primary">#0d2c42</color>
-    <color name="secondary">#5f707c</color>
+    <color name="secondary">#43217F</color>
+
+    <color name="own_message">#3F51B5</color>
+    <color name="others_message">#673AB7</color>
 
     <color name="offwhite">#FAFAFA</color>
     <color name="gray">#C3C3C3</color>

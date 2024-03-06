@@ -16,9 +16,8 @@ import com.kingk.chat.utils.FirebaseUtil
 
 class UserRecyclerAdapter(private val userList : ArrayList<User>, private val context: Context) : RecyclerView.Adapter<UserRecyclerAdapter.UserModelViewHolder>() {
 
-    val firebaseUtil = FirebaseUtil()
-    val androidUtil = AndroidUtil()
-
+    private var androidUtil: AndroidUtil = AndroidUtil()
+    private var firebaseUtil : FirebaseUtil = FirebaseUtil()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -36,9 +35,6 @@ class UserRecyclerAdapter(private val userList : ArrayList<User>, private val co
         holder.itemView.setOnClickListener() {
             val intent = Intent(context, SelectedConversation::class.java)
             androidUtil.passUserIntent(intent, user)
-            //intent.putExtra("userID", user.userID)
-            //intent.putExtra("username", user.username)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             context.startActivity(intent)
         }
     }

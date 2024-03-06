@@ -19,6 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/username"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
             android:layout_marginStart="10dp"
@@ -70,6 +71,7 @@
             android:layout_marginBottom="10dp"
             android:layout_toLeftOf="@+id/send_button"
             android:hint="@string/message_hint"
+            android:textColor="@color/white"
             android:padding="10dp" />
 
         <ImageButton

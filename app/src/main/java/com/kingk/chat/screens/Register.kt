@@ -61,7 +61,7 @@ class Register : AppCompatActivity() {
 
                         // create user object
                         val user = User(
-                            firebaseUtil.currentUserId(),
+                            firebaseUtil.getCurrentUserID(),
                             username,
                             email
                         )

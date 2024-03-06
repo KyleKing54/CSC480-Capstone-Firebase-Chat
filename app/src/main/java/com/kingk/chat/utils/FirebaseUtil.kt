@@ -5,6 +5,7 @@ import android.content.Intent
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kingk.chat.screens.Login
@@ -12,7 +13,7 @@ import com.kingk.chat.screens.MainActivity
 
 class FirebaseUtil {
 
-    // check if user is alreadly logged in, skip login if they are
+    // check if user is already logged in, skip login if they are
     fun skipLogin(context: Context, auth : FirebaseAuth) {
         if (auth.currentUser != null) {
             val intent = Intent(context, MainActivity::class.java)
@@ -29,15 +30,21 @@ class FirebaseUtil {
     }
 
     // returns the user's UID from their authentication account
-    fun currentUserId(): String {
+    fun getCurrentUserID(): String {
         return Firebase.auth.currentUser!!.uid
+    }
+
+    // returns all users in the "Users" db
+    fun getAllUsers() : CollectionReference {
+        return FirebaseFirestore.getInstance().collection("Users")
     }
 
     // returns the user's stored data from the Firestore database "users"
     fun currentUserData(): DocumentReference {
-        return FirebaseFirestore.getInstance().collection("Users").document(currentUserId())
+        return FirebaseFirestore.getInstance().collection("Users").document(getCurrentUserID())
     }
 
+    // combine two userID's into a unique hash value for their conversationID
     fun generateConversationID (userID1: String, userID2 : String): String {
         // TODO build an actual hash here
         if (userID1.hashCode() < userID2.hashCode()) {
@@ -49,7 +56,20 @@ class FirebaseUtil {
     }
 
     // returns the unique conversation ID hash from Firestore, if one exists
-    fun findConversation(conversationID : String): DocumentReference {
+    fun getConversationID (conversationID : String): DocumentReference {
         return FirebaseFirestore.getInstance().collection("Conversations").document(conversationID)
+    }
+
+    fun getConversationMessages (conversationID : String): CollectionReference {
+        return getConversationID(conversationID).collection("Messages")
+    }
+
+    fun getConversationPartner (userIDs : List<String>): DocumentReference {
+        if (userIDs[0] == getCurrentUserID()) {
+            return getAllUsers().document(userIDs[1])
+        }
+        else {
+            return getAllUsers().document(userIDs[0])
+        }
     }
 }
