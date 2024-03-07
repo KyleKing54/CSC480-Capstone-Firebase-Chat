@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
         convoChangeManager()
 
         searchButton.setOnClickListener() {
-           startActivity(Intent(this, SearchUsers::class.java))
+           startActivity(Intent(this, NewConversation::class.java))
            finish()
         }
 

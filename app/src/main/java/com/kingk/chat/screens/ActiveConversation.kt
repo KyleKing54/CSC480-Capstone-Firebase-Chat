@@ -25,7 +25,7 @@ import com.kingk.chat.objects.User
 import com.kingk.chat.utils.AndroidUtil
 import com.kingk.chat.utils.FirebaseUtil
 
-class SelectedConversation : AppCompatActivity() {
+class ActiveConversation : AppCompatActivity() {
 
     private var auth : FirebaseAuth = Firebase.auth
     private var androidUtil: AndroidUtil = AndroidUtil()

@@ -20,7 +20,7 @@ import com.kingk.chat.objects.User
 import com.kingk.chat.utils.AndroidUtil
 import com.kingk.chat.utils.FirebaseUtil
 
-class SearchUsers : AppCompatActivity() {
+class NewConversation : AppCompatActivity() {
 
     private lateinit var db : FirebaseFirestore
     private lateinit var userArrayList : ArrayList<User>

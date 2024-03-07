@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kingk.chat.R
 import com.kingk.chat.objects.User
-import com.kingk.chat.screens.SelectedConversation
+import com.kingk.chat.screens.ActiveConversation
 import com.kingk.chat.utils.AndroidUtil
 import com.kingk.chat.utils.FirebaseUtil
 
@@ -33,7 +33,7 @@ class UserRecyclerAdapter(private val userList : ArrayList<User>, private val co
         holder.username.text = user.username
 
         holder.itemView.setOnClickListener() {
-            val intent = Intent(context, SelectedConversation::class.java)
+            val intent = Intent(context, ActiveConversation::class.java)
             androidUtil.passUserIntent(intent, user)
             context.startActivity(intent)
         }
