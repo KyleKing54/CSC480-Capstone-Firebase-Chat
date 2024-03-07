@@ -7,6 +7,7 @@ import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var db : FirebaseFirestore
     private lateinit var convoArrayList : ArrayList<Conversation>
     private lateinit var adapter : RecentConvoRecyclerAdapter
-    lateinit var recentConversationRecycler : RecyclerView
+    private lateinit var recentConversationRecycler : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         firebaseUtil.verifyLogin(this, auth)
 
         // initialize UI objects
-        val searchButton = findViewById<ImageButton>(R.id.search_button)
+        val searchButton = findViewById<ExtendedFloatingActionButton>(R.id.new_conversation_button)
         val logoutButton = findViewById<ImageButton>(R.id.logout_button)
         recentConversationRecycler = findViewById(R.id.recent_conversations_recycler)
 
