@@ -35,7 +35,7 @@ class FirebaseUtil {
     }
 
     // returns all users in the "Users" db
-    fun getAllUsers() : CollectionReference {
+    private fun getAllUsers() : CollectionReference {
         return FirebaseFirestore.getInstance().collection("Users")
     }
 
