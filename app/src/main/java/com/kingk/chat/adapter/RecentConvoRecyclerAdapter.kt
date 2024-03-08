@@ -23,6 +23,7 @@ class RecentConvoRecyclerAdapter (
     private var androidUtil: AndroidUtil = AndroidUtil()
     private var firebaseUtil : FirebaseUtil = FirebaseUtil()
 
+    // inflate item in recyclerview and return view holder
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -33,13 +34,15 @@ class RecentConvoRecyclerAdapter (
         return ConvoViewHolder(itemView)
     }
 
-    // create user class, set values, pass to holder
+    // load items into holder
     override fun onBindViewHolder(holder: ConvoViewHolder, position: Int) {
         val conversation : Conversation = convoList[position]
 
         conversation.users?.let {
+            // get the information about the conversation and the other user in it
             firebaseUtil.getConversationPartner(it).get().addOnCompleteListener() { task ->
                 if (task.isSuccessful) {
+                    // load that user into the view holder
                     val convoPartner : User = task.result.toObject(User::class.java)!!
                     holder.username.text = convoPartner.username
                     holder.lastMessage.text = conversation.lastMessage
@@ -49,6 +52,7 @@ class RecentConvoRecyclerAdapter (
                         )
                     }
 
+                    // add onclick listener to open conversation when clicked on
                     holder.itemView.setOnClickListener() {
                         val intent = Intent(context, ActiveConversation::class.java)
                         androidUtil.passUserIntent(intent, convoPartner)

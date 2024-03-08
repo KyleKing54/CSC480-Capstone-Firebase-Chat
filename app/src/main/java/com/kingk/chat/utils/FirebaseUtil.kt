@@ -60,16 +60,17 @@ class FirebaseUtil {
         return FirebaseFirestore.getInstance().collection("Conversations").document(conversationID)
     }
 
+    // returns all messages in a specific conversation ID
     fun getConversationMessages (conversationID : String): CollectionReference {
         return getConversationID(conversationID).collection("Messages")
     }
 
+    // returns the other user's username in a conversation based on their userID
     fun getConversationPartner (userIDs : List<String>): DocumentReference {
-        if (userIDs[0] == getCurrentUserID()) {
-            return getAllUsers().document(userIDs[1])
-        }
-        else {
-            return getAllUsers().document(userIDs[0])
+        return if (userIDs[0] == getCurrentUserID()) {
+            getAllUsers().document(userIDs[1])
+        } else {
+            getAllUsers().document(userIDs[0])
         }
     }
 }

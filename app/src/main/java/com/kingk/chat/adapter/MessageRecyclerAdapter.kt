@@ -22,21 +22,27 @@ class MessageRecyclerAdapter (
     private var androidUtil: AndroidUtil = AndroidUtil()
     private var firebaseUtil : FirebaseUtil = FirebaseUtil()
 
+    // inflate item in recyclerview and return view holder
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): ConversationViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.message_recycler_item, parent, false)
+        val itemView = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.message_recycler_item, parent, false)
         return ConversationViewHolder(itemView)
     }
 
+    // load items into holder
     override fun onBindViewHolder(holder: ConversationViewHolder, position: Int) {
         val message : Message = messageList[position]
+        // if user sent the current message, apply own message layout
         if (message.senderID.equals(firebaseUtil.getCurrentUserID())) {
             holder.ownLayout.isVisible = true
             holder.othersLayout.isVisible = false
             holder.ownMessage.text = message.text
         }
+        // otherwise, apply other user layout
         else {
             holder.othersLayout.isVisible = true
             holder.ownLayout.isVisible = false

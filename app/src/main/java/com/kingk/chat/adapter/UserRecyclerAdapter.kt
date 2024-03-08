@@ -36,7 +36,9 @@ class UserRecyclerAdapter(
         parent: ViewGroup,
         viewType: Int
     ): UserModelViewHolder {
-        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.user_recycler_item, parent, false)
+        val itemView = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.user_recycler_item, parent, false)
         return UserModelViewHolder(itemView)
     }
 
