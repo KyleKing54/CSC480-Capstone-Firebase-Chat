@@ -5,6 +5,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kingk.chat.R
@@ -12,13 +14,24 @@ import com.kingk.chat.objects.User
 import com.kingk.chat.screens.ActiveConversation
 import com.kingk.chat.utils.AndroidUtil
 import com.kingk.chat.utils.FirebaseUtil
+import java.util.Locale
 
 
-class UserRecyclerAdapter(private val userList : ArrayList<User>, private val context: Context) : RecyclerView.Adapter<UserRecyclerAdapter.UserModelViewHolder>() {
+class UserRecyclerAdapter(
+    private val userList : ArrayList<User>,
+    private val context: Context
+) : RecyclerView.Adapter<UserRecyclerAdapter.UserModelViewHolder>(), Filterable {
 
     private var androidUtil: AndroidUtil = AndroidUtil()
     private var firebaseUtil : FirebaseUtil = FirebaseUtil()
+    private var userFilterList: ArrayList<User>
 
+    // set the filter to all users in the list on construction
+    init {
+        userFilterList = userList
+    }
+
+    // inflate item in recyclerview and return view holder
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -27,11 +40,12 @@ class UserRecyclerAdapter(private val userList : ArrayList<User>, private val co
         return UserModelViewHolder(itemView)
     }
 
-    // create user class, set values, pass to holder
+    // load items into holder
     override fun onBindViewHolder(holder: UserModelViewHolder, position: Int) {
-        val user : User = userList[position]
+        val user : User = userFilterList[position]
         holder.username.text = user.username
 
+        // set onclick listener to open the clicked on conversation
         holder.itemView.setOnClickListener() {
             val intent = Intent(context, ActiveConversation::class.java)
             androidUtil.passUserIntent(intent, user)
@@ -39,8 +53,42 @@ class UserRecyclerAdapter(private val userList : ArrayList<User>, private val co
         }
     }
 
+    // filter out user's based on user's input into filter text box
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val searchInput = constraint.toString()
+                // if input is empty, don't filter any users out
+                userFilterList = if (searchInput.isEmpty()) {
+                    userList
+                } else {
+                    // create variable to hold results of the filter
+                    val resultList = ArrayList<User>()
+                    for (item in userList) {
+                        // loop through userlist, if user's username contains the searchInput, add it to the results list
+                        if (item.username!!.lowercase(Locale.ENGLISH).contains(searchInput.lowercase(Locale.ENGLISH))) {
+                            resultList.add(item)
+                        }
+                    }
+                    // return all users not filtered out
+                    resultList
+                }
+                // create a filter result, load in our results, then return the results
+                val filterResult = FilterResults()
+                filterResult.values = userFilterList
+                return filterResult
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                userFilterList = results?.values as ArrayList<User>
+                notifyDataSetChanged()
+            }
+
+        }
+    }
+
     override fun getItemCount(): Int {
-        return userList.size
+        return userFilterList.size
     }
 
     class UserModelViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

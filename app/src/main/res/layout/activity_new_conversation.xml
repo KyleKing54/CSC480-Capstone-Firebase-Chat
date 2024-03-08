@@ -40,46 +40,20 @@
 
     </RelativeLayout>
 
-    <!-- search users layout -->
-    <RelativeLayout
-        android:id="@+id/search_layout"
+    <!-- recyclerview search -->
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/user_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_below="@id/toolbar" >
-
-        <!-- search edittext box -->
-        <EditText
-            android:id="@+id/search_edit_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/search_users_button"
-            android:padding="10dp"
-            android:layout_margin="10dp"
-            android:hint="@string/search_users"
-            android:autofillHints=""
-            android:inputType="text" />
-
-        <!-- search button -->
-        <ImageButton
-            android:id="@+id/search_users_button"
-            android:contentDescription="@string/search_users"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/search_24"
-            app:tint="@color/white"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true" />
-
-    </RelativeLayout>
+        android:background="@color/gray"
+        android:layout_below="@id/toolbar"/>
 
     <!-- user recyclerview -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/user_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/search_layout"
+        android:layout_below="@id/user_search"
         android:padding="10dp" />
 
 </RelativeLayout>

@@ -3,9 +3,9 @@ package com.kingk.chat.screens
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.EditText
 import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.Firebase
@@ -38,8 +38,9 @@ class NewConversation : AppCompatActivity() {
         firebaseUtil.verifyLogin(this, auth)
 
         // initialize UI objects
-        val searchEditText = findViewById<EditText>(R.id.search_edit_text)
-        val searchButton = findViewById<ImageButton>(R.id.search_users_button)
+        //val searchEditText = findViewById<EditText>(R.id.search_edit_text)
+        //val searchButton = findViewById<ImageButton>(R.id.search_users_button)
+        val userSearch = findViewById<SearchView>(R.id.user_search)
         val userRecyclerView = findViewById<RecyclerView>(R.id.user_recycler)
         val backButton = findViewById<ImageButton>(R.id.back_button)
 
@@ -51,6 +52,22 @@ class NewConversation : AppCompatActivity() {
 
         // start change manager to load data from Firestore into recyclerview
         eventChangeManager()
+
+        // configure search field
+        userSearch.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+
+            // filter applied as user types, ignore submit button
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            // update adapter on new text input to apply the filter
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+
+        })
 
         // configure back button
         backButton.setOnClickListener() {
