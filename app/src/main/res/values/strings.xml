@@ -15,6 +15,7 @@
     <string name="back_button">Back Button</string>
     <string name="username">Username</string>
     <string name="profile_picture">Profile Picture</string>
-    <string name="message_hint">Message...</string>
+    <string name="message_hint">Message…</string>
     <string name="new_conversation">New Conversation</string>
+    <string name="send_button">Send message button</string>
 </resources>

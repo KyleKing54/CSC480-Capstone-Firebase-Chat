@@ -13,7 +13,7 @@
     android:gravity="center"
     android:padding="15dp">
 
-    <!-- Title -->
+    <!-- app title -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +22,6 @@
         android:textColor="@color/white"
         android:textSize="25sp"
         android:textStyle="bold" />
-
     <TextView
         android:text="@string/firebase_chat"
         android:textColor="@color/white"
@@ -31,7 +30,6 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
     <TextView
         android:text="@string/kyle_king"
         android:textSize="20sp"
@@ -40,6 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <!-- register text -->
     <TextView
         android:text="@string/register"
         android:textColor="@color/white"
@@ -49,11 +48,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <!-- email text input field -->
+    <!-- email text layout -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- email text input field -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email"
             android:hint="@string/email"
@@ -63,11 +63,12 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- username text input field -->
+    <!-- username text layout -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- username text input field -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/username"
             android:hint="@string/username"
@@ -77,11 +78,12 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- password text input field -->
+    <!-- password text layout -->
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <!-- password text input field -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:hint="@string/password"
@@ -91,14 +93,15 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <!-- login button -->
+    <!-- register button -->
     <Button
         android:id="@+id/register_button"
         android:text="@string/register"
+        android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <!-- switch text -->
+    <!-- switch to login text -->
     <TextView
         android:id="@+id/switch_to_login"
         android:text="@string/switch_to_login"

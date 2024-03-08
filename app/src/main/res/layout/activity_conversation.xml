@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".screens.ActiveConversation">
 
+    <!-- toolbar layout -->
     <RelativeLayout
         android:id="@+id/conversation_toolbar"
         android:layout_width="match_parent"
@@ -14,11 +15,11 @@
         android:background="@color/primary"
         android:padding="10dp" >
 
+        <!-- toolbar title, displays conversation partner's name -->
         <TextView
             android:id="@+id/received_username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/username"
             android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold"
@@ -26,6 +27,7 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/user_picture"/>
 
+        <!-- back button -->
         <ImageButton
             android:id="@+id/back_button"
             android:contentDescription="@string/back_button"
@@ -36,6 +38,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_centerVertical="true" />
 
+        <!-- user's profile picture (not fully implemented) -->
         <include layout="@layout/user_picture"
             android:id="@+id/user_picture"
             android:layout_width="wrap_content"
@@ -43,9 +46,9 @@
             android:layout_marginStart="10dp"
             android:layout_toEndOf="@id/back_button"/>
 
-
     </RelativeLayout>
 
+    <!-- message recyclerview -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_recycler_view"
         android:layout_width="match_parent"
@@ -53,6 +56,7 @@
         android:layout_below="@+id/conversation_toolbar"
         android:layout_above="@id/message_layout"/>
 
+    <!-- messageBox layout -->
     <RelativeLayout
         android:id="@+id/message_layout"
         android:layout_width="match_parent"
@@ -60,6 +64,7 @@
         android:layout_alignParentBottom="true"
         android:padding="8dp">
 
+        <!-- input message text box -->
         <EditText
             android:id="@+id/message_box"
             android:layout_width="match_parent"
@@ -69,11 +74,14 @@
             android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_toLeftOf="@+id/send_button"
+            android:layout_toStartOf="@+id/send_button"
             android:hint="@string/message_hint"
             android:textColor="@color/white"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:autofillHints=""
+            android:inputType="text" />
 
+        <!-- send message button -->
         <ImageButton
             android:id="@+id/send_button"
             android:layout_width="50dp"
@@ -84,7 +92,8 @@
             android:padding="8dp"
             android:layout_marginStart="10dp"
             android:layout_alignParentEnd="true"
-            android:layout_centerInParent="true" />
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/send_button" />
 
 
     </RelativeLayout>
