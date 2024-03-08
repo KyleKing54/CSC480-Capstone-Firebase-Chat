@@ -7,5 +7,4 @@ data class Conversation (
     val users : List<String> ?= null,
     var lastMessage : String ?= null,
     var lastTimeStamp : Timestamp ?= null,
-    var lastSender : String ?= null
 )

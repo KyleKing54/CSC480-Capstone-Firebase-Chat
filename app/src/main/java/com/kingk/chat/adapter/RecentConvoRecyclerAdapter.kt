@@ -44,7 +44,7 @@ class RecentConvoRecyclerAdapter (
                     holder.username.text = convoPartner.username
                     holder.lastMessage.text = conversation.lastMessage
                     holder.timestamp.text = conversation.lastTimeStamp?.let { it1 ->
-                        androidUtil.timestampToString(
+                        androidUtil.convertTimestamp(
                             it1
                         )
                     }

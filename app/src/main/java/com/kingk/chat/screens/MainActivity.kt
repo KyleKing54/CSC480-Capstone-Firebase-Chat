@@ -22,14 +22,13 @@ import com.kingk.chat.utils.FirebaseUtil
 
 class MainActivity : AppCompatActivity() {
 
-    private var auth : FirebaseAuth = Firebase.auth
-    private var androidUtil: AndroidUtil = AndroidUtil()
-    private var firebaseUtil : FirebaseUtil = FirebaseUtil()
+    private val auth : FirebaseAuth = Firebase.auth
+    private val androidUtil: AndroidUtil = AndroidUtil()
+    private val firebaseUtil : FirebaseUtil = FirebaseUtil()
 
     private lateinit var db : FirebaseFirestore
     private lateinit var convoArrayList : ArrayList<Conversation>
     private lateinit var adapter : RecentConvoRecyclerAdapter
-    private lateinit var recentConversationRecycler : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,29 +38,32 @@ class MainActivity : AppCompatActivity() {
         firebaseUtil.verifyLogin(this, auth)
 
         // initialize UI objects
-        val searchButton = findViewById<ExtendedFloatingActionButton>(R.id.new_conversation_button)
+        val newConvoButton = findViewById<ExtendedFloatingActionButton>(R.id.new_conversation_button)
         val logoutButton = findViewById<ImageButton>(R.id.logout_button)
-        recentConversationRecycler = findViewById(R.id.recent_conversations_recycler)
+        val recentConversationRecycler = findViewById<RecyclerView>(R.id.recent_conversations_recycler)
 
+        // configure the recyclerview and its adapter
         convoArrayList = arrayListOf()
         adapter = RecentConvoRecyclerAdapter(convoArrayList, this)
         recentConversationRecycler.adapter = adapter
         recentConversationRecycler.layoutManager = LinearLayoutManager(this)
 
+        // start change manager to load data from Firestore into recyclerview
         convoChangeManager()
 
-        searchButton.setOnClickListener() {
+        // configure new convo button
+        newConvoButton.setOnClickListener() {
            startActivity(Intent(this, NewConversation::class.java))
-           finish()
         }
 
+        // configure logout button
         logoutButton.setOnClickListener() {
             Firebase.auth.signOut()
             startActivity(Intent(this, Login::class.java))
-            finish()
         }
     }
 
+    // loads user's conversation data pulled from the Firestore db into the recyclerview
     private fun convoChangeManager() {
         db = FirebaseFirestore.getInstance()
         db

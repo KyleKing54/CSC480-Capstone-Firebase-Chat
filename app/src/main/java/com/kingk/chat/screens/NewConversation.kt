@@ -26,56 +26,39 @@ class NewConversation : AppCompatActivity() {
     private lateinit var userArrayList : ArrayList<User>
     private lateinit var adapter : UserRecyclerAdapter
 
-    private var auth : FirebaseAuth = Firebase.auth
-    private var androidUtil: AndroidUtil = AndroidUtil()
-    private var firebaseUtil : FirebaseUtil = FirebaseUtil()
+    private val auth : FirebaseAuth = Firebase.auth
+    private val androidUtil: AndroidUtil = AndroidUtil()
+    private val firebaseUtil : FirebaseUtil = FirebaseUtil()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_users)
+        setContentView(R.layout.activity_new_conversation)
 
         // verify user is still logged in, if not send to login screen
         firebaseUtil.verifyLogin(this, auth)
 
         // initialize UI objects
+        val searchEditText = findViewById<EditText>(R.id.search_edit_text)
         val searchButton = findViewById<ImageButton>(R.id.search_users_button)
-        val searchInputText = findViewById<EditText>(R.id.username_edit_text)
-        val userRecyclerView = findViewById<RecyclerView>(R.id.search_recycler)
+        val userRecyclerView = findViewById<RecyclerView>(R.id.user_recycler)
         val backButton = findViewById<ImageButton>(R.id.back_button)
 
-        //searchInputText.requestFocus()
-
+        // configure the recyclerview and its adapter
         userArrayList = arrayListOf()
         adapter = UserRecyclerAdapter(userArrayList, this)
-
         userRecyclerView.adapter = adapter
         userRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        // start change manager to load data from Firestore into recyclerview
         eventChangeManager()
 
+        // configure back button
         backButton.setOnClickListener() {
             startActivity(Intent(this, MainActivity::class.java))
-            finish()
         }
-
-        /*
-        searchButton.setOnClickListener() {
-
-            val searchText = searchInputText.text.toString()
-
-            if (searchText.isEmpty()) {
-                androidUtil.showToast(this, "empty search")
-                return@setOnClickListener
-            }
-
-            searchUserRecycler(searchText)
-        } */
     }
 
-    private fun searchUserRecycler(searchText: String) {
-        //adapter = UserRecyclerAdapter(,applicationContext)
-
-    }
-
+    // loads register user data pulled from the Firestore db into the recyclerview
     private fun eventChangeManager() {
         db = FirebaseFirestore.getInstance()
         db.collection("Users")

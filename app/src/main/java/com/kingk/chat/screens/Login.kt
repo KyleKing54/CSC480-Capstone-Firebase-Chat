@@ -15,9 +15,9 @@ import com.kingk.chat.utils.FirebaseUtil
 
 class Login : AppCompatActivity() {
 
-    private var auth : FirebaseAuth = Firebase.auth
-    private var androidUtil: AndroidUtil = AndroidUtil()
-    private var firebaseUtil : FirebaseUtil = FirebaseUtil()
+    private val auth : FirebaseAuth = Firebase.auth
+    private val androidUtil: AndroidUtil = AndroidUtil()
+    private val firebaseUtil : FirebaseUtil = FirebaseUtil()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,17 +40,17 @@ class Login : AppCompatActivity() {
             val password = editTextPassword.text.toString()
 
             // validate email input
-            if (email == "") {
-                androidUtil.showToast(this, "Please enter an email")
+            if (!androidUtil.testEmailInput(this, email)) {
                 return@setOnClickListener
             }
 
-            // validate password input
+            // validate password is not empty to prevent crashes
             if (password == "") {
                 androidUtil.showToast(this, "Please enter a password")
                 return@setOnClickListener
             }
 
+            // checks passed, attempt login via Firebase
             auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
@@ -63,6 +63,7 @@ class Login : AppCompatActivity() {
                 }
         }
 
+        // switch to register a new user instead
         switchRegister.setOnClickListener {
             startActivity(Intent(this, Register::class.java))
         }

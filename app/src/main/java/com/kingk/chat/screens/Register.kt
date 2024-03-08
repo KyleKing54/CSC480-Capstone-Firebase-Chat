@@ -16,9 +16,9 @@ import com.kingk.chat.utils.FirebaseUtil
 
 class Register : AppCompatActivity() {
 
-    private var auth : FirebaseAuth = Firebase.auth
-    private var androidUtil: AndroidUtil = AndroidUtil()
-    private var firebaseUtil : FirebaseUtil = FirebaseUtil()
+    private val auth : FirebaseAuth = Firebase.auth
+    private val androidUtil: AndroidUtil = AndroidUtil()
+    private val firebaseUtil : FirebaseUtil = FirebaseUtil()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,21 +42,25 @@ class Register : AppCompatActivity() {
             val password = editTextPassword.text.toString()
 
             // validate email input
-            if (email == "") {
-                androidUtil.showToast(this, "Please enter an email")
+            if (!androidUtil.testEmailInput(this, email)) {
+                return@setOnClickListener
+            }
+
+            // validate username input
+            if (!androidUtil.testUsernameInput(this, email)) {
                 return@setOnClickListener
             }
 
             // validate password input
-            if (password == "") {
-                androidUtil.showToast(this, "Please enter a password")
+            if (!androidUtil.testPasswordInput(this, password)) {
                 return@setOnClickListener
             }
 
+            // checks passed, attempt user registration via Firebase
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
-                        // Sign in success, display a message to the user.
+                        // registration success, display a message to the user.
                         androidUtil.showToast(this, "Account created")
 
                         // create user object
@@ -69,19 +73,18 @@ class Register : AppCompatActivity() {
                         // add user to database
                         firebaseUtil.currentUserData().set(user).addOnCompleteListener() {
                             if (task.isSuccessful) {
-                                // Log the user in
+                                // log the user in
                                 startActivity(Intent(this, MainActivity::class.java))
                             }
                         }
-
-
                     } else {
-                        // If sign in fails, display a message to the user.
+                        // if sign in fails, display a message to the user
                         androidUtil.showToast(this, "Authentication failed")
                     }
                 }
             }
 
+        // switch back to existing user login
         switchLogin.setOnClickListener {
             startActivity(Intent(this, Login::class.java))
         }
