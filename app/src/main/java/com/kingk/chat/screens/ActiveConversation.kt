@@ -9,7 +9,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.AdapterDataObserver
 import com.google.firebase.Firebase
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
@@ -35,12 +34,11 @@ class ActiveConversation : AppCompatActivity() {
     private lateinit var receivedUser : User
     private lateinit var conversationID : String
     private lateinit var messageBox : EditText
+    private lateinit var messageRecyclerView : RecyclerView
 
     private lateinit var db : FirebaseFirestore
     private lateinit var messageArrayList : ArrayList<Message>
     private lateinit var adapter : MessageRecyclerAdapter
-
-    lateinit var messageRecyclerView : RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,11 +51,11 @@ class ActiveConversation : AppCompatActivity() {
         receivedUser = androidUtil.receiveUserIntent(intent)
 
         // initialize UI objects
-        messageBox = findViewById<EditText>(R.id.message_box)
+        messageBox = findViewById(R.id.message_box)
+        messageRecyclerView = findViewById(R.id.message_recycler_view)
         val sendButton = findViewById<ImageButton>(R.id.send_button)
         val backButton = findViewById<ImageButton>(R.id.back_button)
         val otherPerson = findViewById<TextView>(R.id.received_username)
-        val messageRecyclerView = findViewById<RecyclerView>(R.id.message_recycler_view)
 
         // find the conversationID for the two users in the conversation
         conversationID = firebaseUtil.generateConversationID(firebaseUtil.getCurrentUserID(), receivedUser.userID.toString())
@@ -69,11 +67,11 @@ class ActiveConversation : AppCompatActivity() {
         messageArrayList = arrayListOf()
         adapter = MessageRecyclerAdapter(messageArrayList, this)
         messageRecyclerView.adapter = adapter
-        messageRecyclerView.layoutManager = LinearLayoutManager(this)
 
-        // TODO fix layout manager
+        // configure layout manager
         val layoutManager = LinearLayoutManager(this)
-        layoutManager.reverseLayout = true
+        layoutManager.stackFromEnd = true
+        messageRecyclerView.layoutManager = layoutManager
 
         // loads the previous conversation between the user's or create a new one if needed
         loadConversation()
@@ -161,15 +159,10 @@ class ActiveConversation : AppCompatActivity() {
                     }
                 }
 
-                // TODO fix scroll to bottom on message send
-                adapter.registerAdapterDataObserver(object : AdapterDataObserver() {
-                    override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                        super.onItemRangeInserted(positionStart, itemCount)
-                        messageRecyclerView.smoothScrollToPosition(0)
-                    }
-                })
-
                 adapter.notifyDataSetChanged()
+
+                // scroll to the newest message in the conversation
+                messageRecyclerView.scrollToPosition(adapter.itemCount - 1)
             }
     }
 }
