@@ -1,5 +1,6 @@
 package com.kingk.chat.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -80,12 +81,12 @@ class UserRecyclerAdapter(
             }
 
             // add the filtered results to the list to be created
+            @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
                 // suppressing the warning, the data will always be the correct type
                 @Suppress("UNCHECKED_CAST")
                 userFilterList = results?.values as ArrayList<User>
-                //notifyDataSetChanged()
-                notifyItemChanged(userFilterList.size)
+                notifyDataSetChanged()
             }
 
         }

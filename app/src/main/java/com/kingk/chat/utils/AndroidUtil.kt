@@ -63,7 +63,7 @@ class AndroidUtil {
 
         // check if input was longer than min required length
         if (input.length <= minPasswordLength) {
-            showToast(context, "Minimum required username length is $minPasswordLength")
+            showToast(context, "Minimum required password length is $minPasswordLength")
             return false
         }
 
