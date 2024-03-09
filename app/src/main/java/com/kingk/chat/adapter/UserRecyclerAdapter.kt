@@ -79,10 +79,13 @@ class UserRecyclerAdapter(
                 return filterResult
             }
 
+            // add the filtered results to the list to be created
             override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                // suppressing the warning, the data will always be the correct type
+                @Suppress("UNCHECKED_CAST")
                 userFilterList = results?.values as ArrayList<User>
                 //notifyDataSetChanged()
-                notifyItemChanged(userFilterList.size - 1)
+                notifyItemChanged(userFilterList.size)
             }
 
         }

@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity() {
         db
             .collection("Conversations")
             .whereArrayContains("users", firebaseUtil.getCurrentUserID())
-            .orderBy("lastTimeStamp", Query.Direction.ASCENDING)
+            .orderBy("lastTimeStamp", Query.Direction.DESCENDING)
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Log.e("Firestore DB error", error.message.toString())
