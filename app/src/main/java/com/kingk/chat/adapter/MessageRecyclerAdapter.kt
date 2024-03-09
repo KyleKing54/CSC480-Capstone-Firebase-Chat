@@ -40,13 +40,23 @@ class MessageRecyclerAdapter (
         if (message.senderID.equals(firebaseUtil.getCurrentUserID())) {
             holder.ownLayout.isVisible = true
             holder.othersLayout.isVisible = false
+
+            holder.ownTimestamp.isVisible = true
+            holder.othersTimestamp.isVisible = false
+
             holder.ownMessage.text = message.text
+            holder.ownTimestamp.text = message.timestamp?.let { androidUtil.convertTimestamp(it) }
         }
         // otherwise, apply other user layout
         else {
             holder.othersLayout.isVisible = true
             holder.ownLayout.isVisible = false
+
+            holder.othersTimestamp.isVisible = true
+            holder.ownTimestamp.isVisible = false
+
             holder.othersMessage.text = message.text
+            holder.othersTimestamp.text = message.timestamp?.let { androidUtil.convertTimestamp(it) }
         }
     }
 
@@ -56,9 +66,11 @@ class MessageRecyclerAdapter (
 
     class ConversationViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val ownLayout : LinearLayout = itemView.findViewById(R.id.own_layout)
-        val othersLayout : LinearLayout = itemView.findViewById(R.id.others_layout)
-
         val ownMessage : TextView = itemView.findViewById(R.id.own_message)
+        val ownTimestamp : TextView = itemView.findViewById(R.id.own_timestamp)
+
+        val othersLayout : LinearLayout = itemView.findViewById(R.id.others_layout)
         val othersMessage : TextView = itemView.findViewById(R.id.others_message)
+        val othersTimestamp : TextView = itemView.findViewById(R.id.others_timestamp)
     }
 }

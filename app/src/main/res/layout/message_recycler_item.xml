@@ -13,8 +13,7 @@
         android:layout_height="wrap_content"
         android:background="@color/own_message"
         android:padding="8dp"
-        android:layout_marginEnd="80dp"
-        android:layout_alignParentBottom="true">
+        android:layout_marginEnd="80dp" >
 
         <TextView
             android:id="@+id/own_message"
@@ -25,6 +24,17 @@
 
     </LinearLayout>
 
+    <!-- timestamp of message from the user -->
+    <TextView
+        android:id="@+id/own_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/light_gray"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/own_layout" />
+
     <!-- Messages received by the user -->
     <LinearLayout
         android:id="@+id/others_layout"
@@ -34,7 +44,6 @@
         android:padding="8dp"
         android:layout_marginStart="80dp"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         tools:ignore="RelativeOverlap">
 
         <TextView
@@ -45,5 +54,17 @@
             android:textSize="20sp"/>
 
     </LinearLayout>
+
+    <!-- timestamp of message received by the user -->
+    <TextView
+        android:id="@+id/others_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/light_gray"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/others_layout" />
 
 </RelativeLayout>
