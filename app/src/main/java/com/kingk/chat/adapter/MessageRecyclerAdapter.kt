@@ -1,6 +1,5 @@
 package com.kingk.chat.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,9 +13,8 @@ import com.kingk.chat.utils.AndroidUtil
 import com.kingk.chat.utils.FirebaseUtil
 
 
-class MessageRecyclerAdapter (
-    private val messageList : ArrayList<Message>,
-    private val context: Context
+class MessageRecyclerAdapter(
+    private val messageList: ArrayList<Message>
 ) : RecyclerView.Adapter<MessageRecyclerAdapter.ConversationViewHolder>() {
 
     private var androidUtil: AndroidUtil = AndroidUtil()

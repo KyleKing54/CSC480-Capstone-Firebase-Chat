@@ -17,13 +17,11 @@ import com.google.firebase.firestore.Query
 import com.kingk.chat.R
 import com.kingk.chat.adapter.RecentConvoRecyclerAdapter
 import com.kingk.chat.objects.Conversation
-import com.kingk.chat.utils.AndroidUtil
 import com.kingk.chat.utils.FirebaseUtil
 
 class MainActivity : AppCompatActivity() {
 
     private val auth : FirebaseAuth = Firebase.auth
-    private val androidUtil: AndroidUtil = AndroidUtil()
     private val firebaseUtil : FirebaseUtil = FirebaseUtil()
 
     private lateinit var db : FirebaseFirestore
@@ -52,12 +50,12 @@ class MainActivity : AppCompatActivity() {
         convoChangeManager()
 
         // configure new convo button
-        newConvoButton.setOnClickListener() {
+        newConvoButton.setOnClickListener {
            startActivity(Intent(this, NewConversation::class.java))
         }
 
         // configure logout button
-        logoutButton.setOnClickListener() {
+        logoutButton.setOnClickListener {
             Firebase.auth.signOut()
             startActivity(Intent(this, Login::class.java))
         }
@@ -81,7 +79,8 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
 
-                adapter.notifyDataSetChanged()
+                //adapter.notifyDataSetChanged()
+                adapter.notifyItemChanged(adapter.itemCount - 1)
             }
     }
 }

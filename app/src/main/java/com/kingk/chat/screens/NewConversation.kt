@@ -17,7 +17,6 @@ import com.google.firebase.firestore.Query
 import com.kingk.chat.R
 import com.kingk.chat.adapter.UserRecyclerAdapter
 import com.kingk.chat.objects.User
-import com.kingk.chat.utils.AndroidUtil
 import com.kingk.chat.utils.FirebaseUtil
 
 class NewConversation : AppCompatActivity() {
@@ -27,7 +26,6 @@ class NewConversation : AppCompatActivity() {
     private lateinit var adapter : UserRecyclerAdapter
 
     private val auth : FirebaseAuth = Firebase.auth
-    private val androidUtil: AndroidUtil = AndroidUtil()
     private val firebaseUtil : FirebaseUtil = FirebaseUtil()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +68,7 @@ class NewConversation : AppCompatActivity() {
         })
 
         // configure back button
-        backButton.setOnClickListener() {
+        backButton.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
     }
@@ -91,7 +89,8 @@ class NewConversation : AppCompatActivity() {
                 }
             }
 
-            adapter.notifyDataSetChanged()
+            //adapter.notifyDataSetChanged()
+            adapter.notifyItemChanged(adapter.itemCount - 1)
         }
     }
 }

@@ -40,7 +40,7 @@ class RecentConvoRecyclerAdapter (
 
         conversation.users?.let {
             // get the information about the conversation and the other user in it
-            firebaseUtil.getConversationPartner(it).get().addOnCompleteListener() { task ->
+            firebaseUtil.getConversationPartner(it).get().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // load that user into the view holder
                     val convoPartner : User = task.result.toObject(User::class.java)!!
@@ -53,7 +53,7 @@ class RecentConvoRecyclerAdapter (
                     }
 
                     // add onclick listener to open conversation when clicked on
-                    holder.itemView.setOnClickListener() {
+                    holder.itemView.setOnClickListener {
                         val intent = Intent(context, ActiveConversation::class.java)
                         androidUtil.passUserIntent(intent, convoPartner)
                         context.startActivity(intent)

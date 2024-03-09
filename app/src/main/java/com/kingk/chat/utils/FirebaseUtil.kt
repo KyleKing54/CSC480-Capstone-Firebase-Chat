@@ -47,11 +47,10 @@ class FirebaseUtil {
     // combine two userID's into a unique hash value for their conversationID
     fun generateConversationID (userID1: String, userID2 : String): String {
         // TODO build an actual hash here
-        if (userID1.hashCode() < userID2.hashCode()) {
-            return userID1 + "_" + userID2
-        }
-        else {
-            return userID2 + "_" + userID1
+        return if (userID1.hashCode() < userID2.hashCode()) {
+            userID1 + "_" + userID2
+        } else {
+            userID2 + "_" + userID1
         }
     }
 

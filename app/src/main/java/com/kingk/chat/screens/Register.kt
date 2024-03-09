@@ -71,7 +71,7 @@ class Register : AppCompatActivity() {
                         )
 
                         // add user to database
-                        firebaseUtil.currentUserData().set(user).addOnCompleteListener() {
+                        firebaseUtil.currentUserData().set(user).addOnCompleteListener {
                             if (task.isSuccessful) {
                                 // log the user in
                                 startActivity(Intent(this, MainActivity::class.java))

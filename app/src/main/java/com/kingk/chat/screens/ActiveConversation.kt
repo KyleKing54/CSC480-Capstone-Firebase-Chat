@@ -65,7 +65,7 @@ class ActiveConversation : AppCompatActivity() {
 
         // configure the recyclerview and its adapter
         messageArrayList = arrayListOf()
-        adapter = MessageRecyclerAdapter(messageArrayList, this)
+        adapter = MessageRecyclerAdapter(messageArrayList)
         messageRecyclerView.adapter = adapter
 
         // configure layout manager
@@ -80,7 +80,7 @@ class ActiveConversation : AppCompatActivity() {
         messageChangeManager()
 
         // configure the send button
-        sendButton.setOnClickListener() {
+        sendButton.setOnClickListener {
             val typedMessage = messageBox.text.toString().trim()
             if (typedMessage.isEmpty()) {
                 return@setOnClickListener
@@ -89,7 +89,7 @@ class ActiveConversation : AppCompatActivity() {
         }
 
         // configure the back button
-        backButton.setOnClickListener() {
+        backButton.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
         }
     }
@@ -108,7 +108,7 @@ class ActiveConversation : AppCompatActivity() {
                     // no conversation found, create a new one
                     conversation = Conversation(
                         conversationID,
-                        listOf<String>(firebaseUtil.getCurrentUserID(), receivedUser.userID.toString()),
+                        listOf(firebaseUtil.getCurrentUserID(), receivedUser.userID.toString()),
                         "",
                         Timestamp.now(),
                     )
@@ -125,7 +125,7 @@ class ActiveConversation : AppCompatActivity() {
         val message = Message(messageText, firebaseUtil.getCurrentUserID(), Timestamp.now())
 
         // attempt to send message object to Firestore conversation
-        firebaseUtil.getConversationMessages(conversationID).add(message).addOnCompleteListener() { task ->
+        firebaseUtil.getConversationMessages(conversationID).add(message).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 // update the conversation data
                 conversation.lastTimeStamp = Timestamp.now()
@@ -159,7 +159,8 @@ class ActiveConversation : AppCompatActivity() {
                     }
                 }
 
-                adapter.notifyDataSetChanged()
+                //adapter.notifyDataSetChanged()
+                adapter.notifyItemChanged(adapter.itemCount - 1)
 
                 // scroll to the newest message in the conversation
                 messageRecyclerView.scrollToPosition(adapter.itemCount - 1)
